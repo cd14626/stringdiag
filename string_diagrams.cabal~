@@ -1,0 +1,34 @@
+name:                string_diagrams
+version:             1.0
+synopsis:            string diagrams generator app
+homepage:            
+author:              Carla Diosdado
+maintainer:          cd14626@bristol.ac.uk
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.8
+
+executable string_diagrams
+  main-is:             Main.hs
+  -- other-modules:       
+  build-depends:       base 
+                     , wai
+                     , warp
+                     , http-types
+                     , resourcet
+                     , scotty
+                     , text
+                     , bytestring
+                     , blaze-html
+                     , diagrams
+                     , lucid-svg
+                     , parsec
+                     , diagrams-lib
+                     , diagrams-svg
+                     , monad-logger ==0.3.15
+                     , mtl
+                     , heroku
+                     , transformers
+                     , wai-middleware-static
+                     , wai-extra
+                     , time
