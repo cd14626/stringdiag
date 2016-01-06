@@ -1,0 +1,8 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps: 
+- heroku-0.1.2.3
+- parsec-extra-0.1.0.5
+resolver: lts-3.18

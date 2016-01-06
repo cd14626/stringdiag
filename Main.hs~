@@ -50,7 +50,7 @@ diagrams symbolN content = do
         H.section H.! class_ "content" $ do
           H.section H.! class_ "left" $ do
             H.form H.! A.method "post" H.! A.action "/postDiagram" $ do
-              H.textarea (H.toHtml symbolN) H.! A.type_ "text" H.! A.name "content" H.! A.cols "40" H.! A.rows "30" H.! A.style "resize: none;" H.! A.required ""
+              H.textarea (H.toHtml symbolN) H.! A.type_ "text" H.! A.name "content" H.! A.cols "40" H.! A.rows "20" H.! A.style "resize: none;" H.! A.required ""
               H.br
               H.input H.! class_ "myButton" H.! A.type_ "submit" H.! A.value "Generate"
           H.section H.! class_ "right" $ do

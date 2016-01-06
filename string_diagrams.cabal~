@@ -1,7 +1,6 @@
 name:                string_diagrams
 version:             1.0
 synopsis:            string diagrams generator app
-homepage:            
 author:              Carla Diosdado
 maintainer:          cd14626@bristol.ac.uk
 category:            Web

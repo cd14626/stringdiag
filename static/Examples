@@ -1,0 +1,260 @@
+cat C
+diag catC : C
+-----------------
+cat C
+diag catC : C
+diag catidC : id C
+-----------------
+cat C , D
+func F
+F : D -> C
+diag catC : C
+diag catD : D
+diag funcF : F
+-----------------
+cat C , D
+func F
+F : D -> C
+diag catC : C
+diag catD : D
+diag funcF : F
+diag funcidF : id F
+-----------------
+cat C , D , E
+func F , G
+F : D -> C
+G : E -> D
+diag catC : C
+diag catD : D
+diag catE : E
+diag funcF : F
+diag funcG : G
+diag horGF : F * G
+----------------
+cat C , D
+func F , F'
+nat α
+F : D -> C
+F' : D -> C
+α : F -> F'
+diag catC : C
+diag catD : D
+diag funcF : F
+diag funcFp : F'
+diag alpha : α
+----------------
+cat C , D
+func F , F',F''
+nat α, α'
+F : C -> D
+F' : C -> D
+F'' : C -> D
+α : F -> F'
+α' : F' -> F''
+diag catC : C
+diag catD : D
+diag funcF : F
+diag funcFp : F'
+diag funcFpp : F''
+diag alpha : α
+diag alphap : α'
+diag valphas : α' . α
+----------------
+cat C , D , E
+func F , F' , G , G'
+nat α , β
+F : C -> D
+G : D -> E
+F' : C -> D
+G' : D -> E
+α : F -> F'
+β : G -> G'
+diag catC : C
+diag catD : D
+diag catE : E
+diag funcF : F
+diag funcFp : F'
+diag funcG : G
+diag funcGp : G'
+diag alpha : α
+diag beta : β
+diag halbet : β * α
+-----------------
+cat C , D , E;
+func F , F' , F'' , G , G' , G'';
+nat α , β , α' , β';
+F : C -> D;
+G : D -> E;
+F' : C -> D;
+G' : D -> E;
+F'' : C -> D;
+G'' : D -> E;
+α : F -> F';
+β : G -> G';
+α' : F' -> F'';
+β' : G' -> G'';
+{diag catC : C;}
+{diag int01 : (β' . β) * (α'. α);}
+{diag catD : D;}
+{diag int02 : (β' * α') . (β * α);}
+------------------
+cat C , D , E;
+func F , F' , G , G';
+nat α , β;
+F : C -> D;
+G : D -> E;
+F' : C -> D;
+G' : D -> E;
+α : F -> F';
+β : G -> G';
+{diag halbet01 : β * α;}
+{diag halbet02 : (id G' * α) . (β * id F);}
+{diag halbet03 : (β . id G) * (id F' . α);}
+-------------------
+cat C, D, E;
+func F, G, H;
+nat α;
+F : C -> D;
+G : D -> E;
+H : C -> E;
+α : H -> (G * F);
+{diag mult01 : α;}
+-------------------
+cat A, B, C, D, E, F;
+func G, H, I, J, K, L;
+nat α;
+G : A -> B;
+H : B -> C;
+I : C -> D;
+J : A -> E;
+K : E -> F;
+L : F -> D;
+α : (L * K * J) -> (I * H * G);
+{diag mult02 : α;}
+--------------------
+cat A, B, C, D;
+func E, F, G, H, I;
+nat α, β;
+E: A -> B;
+F: B -> C;
+G: C -> D;
+H: B -> D;
+I: A -> D;
+α: H -> (G * F);
+β: I -> (H * E);
+{diag mult03 : α . β;}
+----------------------
+cat A, B, C, D, E, F;
+func G, H, I, J, K, L, M, N;
+nat α, β, γ;
+G: A -> B;
+H: B -> C;
+I: C -> D;
+J: A -> E;
+K: E -> F;
+L: F -> D;
+M: B -> D;
+N: A -> F;
+α : M -> (I * H);
+β : (L * N) -> (M * G);
+γ : (K * J) -> N;
+{diag mult04 : α . β . γ;}
+-----------------------
+cat C, D;
+func F, G;
+nat η, ε;
+F: C -> D;
+G: D -> C;
+η: (id C) -> (G * F);
+ε: (F * G) -> (id D);
+{diag eta: η;}
+{diag epsilon: ε;}
+-----------------Examples----------------------                     
+idC1 = CatD "C"
+idC2 = Func (IdF "C")
+idC3 = Nat (IdN (IdF "C"))
+functorF1 = Func (FuncSD "F" "C" "D")   
+functorF2 = Nat (IdN (FuncSD "F" "C" "D"))
+functorsFG1 = Func (HorF [FuncSD "G" "D" "E" , FuncSD "F" "C" "D"])
+functorsFG2 = Nat (HorN [IdN (FuncSD "G" "D" "E") , IdN (FuncSD "F" "C" "D")])
+naturalAlpha = Nat (NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D"))
+vertNaturalAlphas = Nat (VerN [NatSD "α'" (FuncSD "F'" "C" "D") (FuncSD "F''" "C" "D"), NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")])
+horNatAlphaBeta = Nat (HorN [NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E"), NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")])
+interchange1 = Nat (HorN [VerN [NatSD "β'" (FuncSD "G'" "D" "E") (FuncSD "G''" "D" "E") , NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E") ], 
+                     VerN [NatSD "α'" (FuncSD "F'" "C" "D") (FuncSD "F''" "C" "D") , NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]])    
+interchange2 = Nat (VerN [HorN [NatSD "β'" (FuncSD "G'" "D" "E") (FuncSD "G''" "D" "E") , NatSD "α'" (FuncSD "F'" "C" "D") (FuncSD "F''" "C" "D")],
+                     HorN [NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E"), NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]])
+sliding1 = Nat (HorN [NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E"), NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")])
+sliding2 = Nat (VerN [HorN [IdN (FuncSD "G'" "D" "E") , NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")] ,
+                 HorN [NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E") , IdN (FuncSD "F" "C" "D")]])
+sliding3 = Nat (VerN [HorN [NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E") , IdN (FuncSD "F'" "C" "D")] ,
+                 HorN [IdN (FuncSD "G" "D" "E") , NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]])
+multiplicationA = Nat (NatSD "α" (FuncSD "H" "C" "E") (HorF [FuncSD "G" "D" "E" , FuncSD "F" "C" "D"]))
+multiplicationB = Nat (NatSD "α" (HorF [FuncSD "L" "F" "D" , FuncSD "K" "E" "F" , FuncSD "J" "A" "E"]) 
+                                     (HorF [FuncSD "I" "C" "D" , FuncSD "H" "B" "C" , FuncSD "G" "A" "B"]))
+multiplicationC = Nat (VerN [
+                        NatSD "α" (FuncSD "H" "B" "D") (HorF [FuncSD "G" "C" "D" , FuncSD "F" "B" "C"]),
+                        NatSD "β"  (FuncSD "I" "A" "D") (HorF [FuncSD "H" "B" "D" , FuncSD "E" "A" "B"])])
+multiplicationD = Nat (VerN [
+                        NatSD "α" (FuncSD "M" "B" "D") (HorF [FuncSD "I" "C" "D" , FuncSD "H" "B" "C"]),
+                        NatSD "β"  (HorF [FuncSD "L" "F" "D" , FuncSD "N" "A" "F"]) (HorF [FuncSD "M" "B" "D" , FuncSD "G" "A" "B"]),
+                        NatSD "γ" (HorF [FuncSD "K" "E" "F" , FuncSD "J" "A" "E"]) (FuncSD "N" "A" "F")])
+adjunctionEta = Nat (NatSD "η" (IdF "C") (HorF [FuncSD "G" "D" "C", FuncSD "F" "C" "D"]))
+adjunctionEpsilon = Nat (NatSD "ε" (HorF [FuncSD "F" "C" "D", FuncSD "G" "D" "C"]) (IdF "D"))
+zigzag1 = Nat (VerN [ HorN [NatSD "ε" (HorF [FuncSD "F" "C" "D", FuncSD "G" "D" "C"]) (IdF "D") , IdN (FuncSD "F" "C" "D") ],
+                 HorN [IdN (FuncSD "F" "C" "D") , NatSD "η" (IdF "C") (HorF [FuncSD "G" "D" "C", FuncSD "F" "C" "D"])]])
+zigzag2 = Nat (VerN [ HorN [IdN (FuncSD "G" "D" "C") , NatSD "ε" (HorF [FuncSD "F" "C" "D", FuncSD "G" "D" "C"]) (IdF "D")] ,
+                 HorN [NatSD "η" (IdF "C") (HorF [FuncSD "G" "D" "C", FuncSD "F" "C" "D"]), IdN (FuncSD "G" "D" "C")]])
+zigzag3 = Func (FuncSD "F" "C" "D")
+zigzag4 = Func (FuncSD "G" "D" "C")
+rainbow1 = Nat (VerN [NatSD "η'" (IdF "D") (HorF [FuncSD "G'" "E" "D", FuncSD "F'" "D" "E"]) ,
+                 NatSD "η" (IdF "C") (HorF [FuncSD "G" "D" "C" , FuncSD "F" "C" "D"])])
+rainbow2 = Nat (VerN [NatSD "ε'" (HorF [FuncSD "F'" "D" "E", FuncSD "G'" "E" "D"]) (IdF "E") ,
+                 NatSD "ε" (HorF [FuncSD "F" "C" "D", FuncSD "G" "D" "C"]) (IdF "D")])
+axiom1 = Func (FuncSD "T" "C" "D")
+axiom2 = Nat (VerN [NatSD "mu" (HorF [FuncSD "T" "C" "C", FuncSD "T" "C" "C"]) (FuncSD "T" "C" "C") , 
+              NatSD "η" (IdF "C") (FuncSD "T" "C" "C")])
+error1 = Nat (NatSD "α" (FuncSD "α" "F" "G") (FuncSD "C" "F" "E"))
+error2 = Nat (VerN [NatSD "α" (HorF [FuncSD "I" "C" "α" , FuncSD "H" "B" "C"]) (FuncSD "M" "B" "D"), 
+               NatSD "β" (HorF [FuncSD "M" "B" "D" , FuncSD "G" "A" "B"]) (HorF [FuncSD "L" "F" "D" , FuncSD "N" "A" "F"]),
+               NatSD "γ" (FuncSD "N" "A" "F") (HorF [FuncSD "K" "E" "F" , FuncSD "J" "A" "E"])])
+error3 = Nat (VerN [NatSD "α" (HorF [FuncSD "I" "C" "D" , FuncSD "H" "B" "C"]) (FuncSD "M" "B" "I"), 
+               NatSD "β" (HorF [FuncSD "M" "B" "D" , FuncSD "G" "A" "B"]) (HorF [FuncSD "L" "F" "D" , FuncSD "N" "A" "F"]), 
+               NatSD "γ" (FuncSD "N" "A" "F") (HorF [FuncSD "K" "E" "F" , FuncSD "J" "A" "E"])])
+error4 = Nat (VerN [NatSD "ε" (HorF [FuncSD "F'" "D" "E", FuncSD "G'" "E" "D"]) (IdF "E") , 
+               NatSD "ε" (HorF [FuncSD "F" "C" "D", FuncSD "G" "D" "C"]) (IdF "D")])
+errorNaturalAlpha = Nat (NatSD "α" (FuncSD "F" "D" "C") (FuncSD "F'" "C" "D"))
+domainTest = Nat (VerN [ HorN [NatSD "ε" (HorF [FuncSD "F" "C" "D", FuncSD "G" "D" "C"]) (IdF "D"),IdN (FuncSD "G" "D" "C")] ,
+                    HorN [IdN (FuncSD "G" "D" "C") , NatSD "η" (IdF "C") (HorF [FuncSD "G" "D" "C", FuncSD "F" "C" "D"])]])
+
+testA = VerN[NatSD "α" (FuncSD "M" "B" "D") (HorF [FuncSD "I" "C" "D" , FuncSD "H" "B" "C"]),
+        NatSD "β"  (HorF [FuncSD "L" "F" "D" , FuncSD "N" "A" "F"]) (HorF [FuncSD "M" "B" "D" , FuncSD "G" "A" "B"]),
+        NatSD "γ" (HorF [FuncSD "K" "E" "F" , FuncSD "J" "A" "E"]) (FuncSD "N" "A" "F")]
+        
+testB = VerN[NatSD "α" (FuncSD "Q" "B" "D") (HorF [FuncSD "I" "C" "D" , FuncSD "H" "B" "C"]),
+        NatSD "β"  (HorF [FuncSD "L" "F" "D" , FuncSD "N" "A" "F"]) (HorF [FuncSD "M" "B" "D" , FuncSD "G" "A" "B"]),
+        NatSD "γ" (HorF [FuncSD "K" "E" "F" , FuncSD "J" "A" "E"]) (FuncSD "N" "A" "F")]        
+                    
+                    
+testData = [idC1,idC2,idC3,functorF1,functorF2,functorsFG1, functorsFG2,naturalAlpha,vertNaturalAlphas,horNatAlphaBeta,
+            interchange1, interchange2,sliding1,sliding2,sliding3,multiplicationA,multiplicationB,multiplicationC,
+            multiplicationD,adjunctionEta,adjunctionEpsilon,zigzag1,zigzag2,zigzag3,zigzag4,rainbow1, rainbow2,axiom1,
+            axiom2,error1,error2,error3,error4]
+            
+test01 = NatSD "α" (HorF [FuncSD "T" "F" "D" ,FuncSD "R" "F" "D" ,FuncSD "L" "F" "D" , FuncSD "K" "E" "F" , FuncSD "J" "A" "E",FuncSD "T" "F" "D" ,FuncSD "R" "F" "D" ,FuncSD "L" "F" "D" , FuncSD "K" "E" "F" , FuncSD "J" "A" "E"]) 
+                     (HorF [FuncSD "I" "C" "D" , IdF "C",  FuncSD "H" "B" "C" , IdF "G", FuncSD "G" "A" "B"])           
+testIds = [FuncSD "I" "C" "D" , IdF "C",  FuncSD "H" "B" "C" , IdF "G", FuncSD "G" "A" "B"]     
+
+testad = NatSD "η" (IdF "C") (HorF [FuncSD "G" "D" "C", FuncSD "F" "C" "D"])    
+
+h01= HorN [NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E"), NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]       
+h02 = HorN [VerN [NatSD "β'" (FuncSD "G'" "D" "E") (FuncSD "G''" "D" "E") , NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E") ], 
+                     VerN [NatSD "α'" (FuncSD "F'" "C" "D") (FuncSD "F''" "C" "D") , NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]]
+h03 = HorN [VerN [NatSD "β'" (HorF [FuncSD "I" "C" "D" , IdF "C",  FuncSD "H" "B" "C" , IdF "G", FuncSD "G" "A" "B"]) (FuncSD "G''" "D" "E") , NatSD "β" (FuncSD "G" "D" "E") (HorF [FuncSD "I" "C" "D" , IdF "C",  FuncSD "H" "B" "C" , IdF "G", FuncSD "G" "A" "B"]) ], 
+                     VerN [NatSD "α'" (FuncSD "F'" "C" "D") (FuncSD "F''" "C" "D") , NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]]                  
+sl =VerN [HorN [(IdN (FuncSD "G'" "D" "E")) , (NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D"))] ,
+                 HorN [(NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E")) , IdN (FuncSD "F" "C" "D")]]                     
+ta= NatSD "α" (HorF [FuncSD "L" "F" "D" , FuncSD "K" "E" "F" , IdF "J" ]) 
+              (HorF [IdF "J" , FuncSD "H" "B" "C" , FuncSD "G" "A" "B"])
+ta1 = HorN [VerN [NatSD "β'" (FuncSD "G'" "D" "E") (FuncSD "G''" "D" "E") , NatSD "β" (FuncSD "G" "D" "E") (FuncSD "G'" "D" "E") ], 
+                     VerN [NatSD "α'" (FuncSD "F'" "C" "D") (FuncSD "F''" "C" "D") , NatSD "α" (FuncSD "F" "C" "D") (FuncSD "F'" "C" "D")]]
